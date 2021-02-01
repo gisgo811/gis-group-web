@@ -1,0 +1,29 @@
+<!--<div #container style="width: 100%; height: 100%;; position: absolute; z-index: 2;"></div>
+<div style="width: 100%;; height: 100%;; position: absolute; z-index: 1; background: url(../../assets/images/slide2.jpg); background-repeat: no-repeat; background-size: 100% 100%;"></div>
+
+<div #popup style="width: 300px; height: 180px; background: rgba(255,240,245, 0.5); padding: 10px 15px;"></div>-->
+
+<div class="module-container">
+    <div class="module-header"></div>
+    <div class="module-body">
+        <div class="movie_card" *ngFor="let activity of activities">
+            <div class="info_section">
+                <div class="movie_header">
+                    <img class="locandina" [src]="activity.cover"/>
+                    <h3>{{activity.title}}</h3>
+                    <h5>{{activity.address}}</h5>
+                    <span class="minutes">{{activity.date}}</span>
+                </div>
+                <div class="movie_desc">
+                    <p class="text">
+                        {{activity.content}}
+                    </p>
+                </div>
+            </div>
+            <div class="blur_back" [ngStyle]="{'background-image': 'url(' + activity.image + ')'}"></div>
+        </div>
+    </div>
+    <div class="module-footer"></div>
+</div>
+
+

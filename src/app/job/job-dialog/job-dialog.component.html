@@ -1,0 +1,208 @@
+<nz-modal [(nzVisible)]="shown" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" [nzMaskClosable]="false" [nzClosable]="false" [nzWidth]="900" (nzOnCancel)="hide()">
+    <form #addJobForm="ngForm" role="form">
+        <ng-template #modalTitle>
+            任务详情<span *ngIf="job?.name">-{{job?.name}}</span>
+        </ng-template>
+
+        <ng-template #modalContent>
+            <div *ngIf="job">
+                <div class="grid-auto-row" *ngIf="mode === 0">
+                    <div class="grid-column-2">
+                        <div class="form-item">
+                            <div class="form-label">任务名称</div>
+                            <input class="form-component" type="text" name="name" [(ngModel)]="job.name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <div class="form-label">描述</div>
+                        <textarea class="form-component" rows="3" [(ngModel)]="job.description" name="description"></textarea>
+                    </div>
+
+                    <div class="form-item" style="align-items: inherit">
+                        <div class="form-label" style="margin-top: 15px;">子任务</div>
+                        <div class="form-component jobs">
+                            <div class="custom-list" *ngIf="job.children?.length >0">
+                                <div class="list-item sub-job-list-columns" *ngFor="let j of job.children;let i = index;">
+                                    <div>{{i+1}}</div>
+                                    <div>
+                                        <label nz-checkbox [name]="'check_sub_job_' + i" [(ngModel)]="j.done" (ngModelChange)="checkSubJobDone(j)"></label>
+                                    </div>
+                                    <div>
+                                        <span *ngIf="!j.edit">{{j.name}}</span>
+                                        <input nz-input *ngIf="j.edit" type="text" [name]="'edit_sub_job_' + i" [(ngModel)]="j.name" (keydown.enter)="editSubJob(j)">
+                                    </div>
+                                    <div class="action">
+                                        <div *ngIf="!j.edit" (click)="editSubJob(j)"><i class="far fa-edit"></i></div>
+                                        <div *ngIf="!j.edit" (click)="removeSubJob(i, j)"><i class="far fa-trash-alt"></i></div>
+                                        <div *ngIf="j.edit" (click)="saveSubJob(j)"><i class="far fa-save"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="custom-list" *ngIf="!child">
+                                <div class="list-item sub-job-list-add">
+                                    <div><i (click)="createSubJob()" class="far fa-plus-square"></i></div>
+                                    <div><span (click)="createSubJob()">添加子任务</span></div>
+                                </div>
+                            </div>
+                            <div *ngIf="child" class="add-job">
+                                <div class="check">
+                                    <label nz-checkbox [(ngModel)]="child.done" (ngModelChange)="checkSubJobDone(child)"></label>
+                                </div>
+                                <div class="content">
+                                    <input nz-input type="text" name="sub_job" [(ngModel)]="child.name" (keydown.enter)="addSubJob()">
+                                </div>
+                                <div class="action">
+                                    <div (click)="addSubJob()"><i class="far fa-plus-square"></i></div>
+                                    <div (click)="cancelAddSubJob()"><i class="far fa-trash-alt"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="mode === 1">
+                    <div class="tab-content">
+                        <app-tabset2 [align]="'center'">
+                            <app-tab2 [heading]="'基本信息'" [active]="true">
+                                <div class="grid-auto-row">
+                                    <div class="grid-column-2">
+                                        <div class="form-item">
+                                            <div class="form-label">任务名称</div>
+                                            <input nz-input class="form-component" type="text" name="name" [(ngModel)]="job.name" [readonly]="!job.hasRole(['CREATOR'])" required>
+                                        </div>
+                                        <div class="form-item">
+                                            <div class="form-label">创建人</div>
+                                            <input nz-input class="form-component" type="text" name="creator" [ngModel]="job.creator?.name" readonly>
+                                        </div>
+                                        <div class="form-item">
+                                            <div class="form-label">开始时间</div>
+                                            <nz-date-picker class="form-component" [nzFormat]="'yyyy/MM/dd'" name="start_date" [ngModel]="job.start_date" readonly></nz-date-picker>
+                                        </div>
+                                        <div class="form-item">
+                                            <div class="form-label">完成时间</div>
+                                            <nz-date-picker class="form-component" [nzFormat]="'yyyy/MM/dd'" name="finish_date" [ngModel]="job.finish_date" readonly></nz-date-picker>
+                                        </div>
+                                    </div>
+                                    <div class="form-item">
+                                        <div class="form-label">描述</div>
+                                        <textarea nz-input class="form-component" rows="3" [(ngModel)]="job.description" name="description" [readonly]="!job.hasRole(['CREATOR','EDITOR'])"></textarea>
+                                    </div>
+                                    <div class="form-item" style="align-items: inherit">
+                                        <div class="form-label" style="margin-top: 15px;">子任务</div>
+                                        <div class="form-component jobs">
+                                            <div class="custom-list" *ngIf="job.children?.length >0">
+                                                <div class="list-item sub-job-list-columns" *ngFor="let j of job.children;let i = index;">
+                                                    <div>{{i+1}}</div>
+                                                    <div>
+                                                        <label *ngIf="job.hasRole(['CREATOR','EDITOR'])" nz-checkbox [name]="'check_sub_job_' + i" [(ngModel)]="j.done" (ngModelChange)="checkSubJobDone(j)"></label>
+                                                        <i class="fas" *ngIf="!job.hasRole(['CREATOR','EDITOR'])" [ngClass]="{'fa-check text-success':j.done,'fa-times text-danger':!j.done}"></i>
+                                                    </div>
+                                                    <div>
+                                                        <span *ngIf="!j.edit">{{j.name}}</span>
+                                                        <input *ngIf="j.edit" type="text" [name]="'edit_sub_job_' + i" [(ngModel)]="j.name" (keydown.enter)="saveSubJob(j)">
+                                                    </div>
+                                                    <div class="action">
+                                                        <div *ngIf="!j.edit && job.hasRole(['CREATOR','EDITOR'])" (click)="editSubJob(j)"><i class="far fa-edit"></i></div>
+                                                        <div *ngIf="!j.edit && job.hasRole(['CREATOR','EDITOR'])" (click)="removeSubJob(i, j)"><i class="far fa-trash-alt"></i></div>
+                                                        <div *ngIf="j.edit && job.hasRole(['CREATOR','EDITOR'])" (click)="saveSubJob(j)"><i class="far fa-save"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="custom-list" *ngIf="!child">
+                                                <div class="list-item sub-job-list-add" [class.disabled]="!job.hasRole(['CREATOR','EDITOR'])">
+                                                    <div><i (click)="createSubJob()" class="far fa-plus-square"></i></div>
+                                                    <div><span (click)="createSubJob()">添加子任务</span></div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="child" class="add-job">
+                                                <div class="check">
+                                                    <label nz-checkbox name="check_sub_job" [(ngModel)]="child.done" (ngModelChange)="checkSubJobDone(child)"></label>
+                                                </div>
+                                                <div class="content">
+                                                    <input nz-input type="text" name="sub_job" [(ngModel)]="child.name" (keydown.enter)="addSubJob()">
+                                                </div>
+                                                <div class="action">
+                                                    <div (click)="addSubJob()"><i class="far fa-plus-square"></i></div>
+                                                    <div (click)="cancelAddSubJob()"><i class="far fa-trash-alt"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-item" style="align-items: inherit">
+                                        <div class="form-label" style="margin-top: 15px;">参与人</div>
+                                        <div class="form-component editors">
+                                            <div class="editor">
+                                                <label class="label label-success-o" *ngFor="let editor of job.editors"><i class="far fa-user"></i>{{editor.name}}</label>
+                                            </div>
+                                            <div class="add-editor">
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="!job.hasRole(['CREATOR','EDITOR'])" (click)="addEditor()">参与</button>
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="job.hasRole(['EDITOR'])" (click)="removeEditor()">取消</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-item" style="align-items: inherit">
+                                        <div class="form-label" style="margin-top: 15px;">关注人</div>
+                                        <div class="form-component editors">
+                                            <div class="editor">
+                                                <label class="label label-success-o" *ngFor="let follower of job.followers"><i class="far fa-user"></i>{{follower.name}}</label>
+                                            </div>
+                                            <div class="add-editor">
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="!job.hasRole(['CREATOR','FOLLOWER'])" (click)="addFollower()">关注</button>
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="job.hasRole(['FOLLOWER'])" (click)="removeFollower()">取消</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </app-tab2>
+                            <app-tab2 [heading]="'用户评论'" [badge]="job.comments?.length">
+                                <div class="comment">
+                                    <textarea nz-input rows="3" [(ngModel)]="comment.content" maxlength="1000" name="comment"></textarea>
+                                    <div class="comment-footer">
+                                        <div class="count">还可输入{{1000 - comment.content.length}}个字符</div>
+                                        <div class="action">
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="addComment();" [disabled]="comment.content.length===0">添加评论</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment-list" *ngIf="job.comments?.length>0">
+                                    <div class="comment-title">
+                                        <div class="title">相关评论({{job.comments?.length}})</div>
+                                    </div>
+                                    <div class="comment-list-item" *ngFor="let c of job.comments;let i = index">
+                                        <div class="comment-header">
+                                            <div class="comment-user">评论人:{{c.user.name}}</div>
+                                            <div class="comment-date">{{c.date | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
+                                        </div>
+                                        <div class="comment-footer">
+                                            <div class="comment-content" *ngIf="!c.edit">{{c.content}}</div>
+                                            <textarea *ngIf="c.edit" rows="2" [(ngModel)]="c.content" maxlength="1000" name="edit_comment"></textarea>
+                                            <div class="delete-icon grid-auto-column" *ngIf="c.user._id === authService.user._id">
+                                                <i *ngIf="!c.edit" class="far fa-edit" (click)="editComment(c)"></i>
+                                                <i *ngIf="!c.edit" class="fa fa-trash-alt" (click)="deleteComment(i, c)"></i>
+                                                <i *ngIf="c.edit" class="far fa-save" (click)="saveComment(c)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </app-tab2>
+                        </app-tabset2>
+                    </div>
+                </div>
+
+            </div>
+        </ng-template>
+
+        <ng-template #modalFooter>
+            <button type="button" class="btn btn-default" (click)="hide()">取消</button>
+            <button type="button" class="btn btn-success" (click)="save()" *ngIf="job?.hasRole(['CREATOR','EDITOR'])"
+                    [disabled]="!addJobForm.form.valid">保存</button>
+        </ng-template>
+    </form>
+</nz-modal>
+
+
+

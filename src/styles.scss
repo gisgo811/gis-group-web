@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
+@import '../node_modules/fullpage.js/dist/fullpage.min.css';
+@import '../node_modules/green-gis/style/green.css';
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+
+@import "./assets/styles/variable.css";
+@import "./assets/styles/app";
+@import "./assets/styles/common";
+@import "./assets/styles/zorro";
+@import "./assets/styles/green";

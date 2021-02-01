@@ -1,0 +1,35 @@
+<div class="module-container">
+    <div class="module-header"></div>
+    <div class="module-body">
+        <div class="card-header">
+            <div class="filter-row">
+                <span style="margin-right: 10px">分类: </span>
+                <nz-checkbox-group [(ngModel)]="categories" (ngModelChange)="filter()"></nz-checkbox-group>
+            </div>
+            <div class="filter-row">
+                <span style="margin-right: 10px">状态: </span>
+                <nz-checkbox-group [(ngModel)]="status" (ngModelChange)="filter()"></nz-checkbox-group>
+            </div>
+        </div>
+        <div class="card-container">
+            <div class="card-wrapper">
+                <div class="task-card" *ngFor="let t of jobs" (click)="jobDlg.edit(t)">
+                    <div class="part1">
+                        <div class="name">
+                            <nz-tag [nzColor]="t.status === 1 ? '#87d068' : '#f50' ">{{t.getStatus()}}</nz-tag>
+                            <span>{{t.name}}</span>
+                        </div>
+                    </div>
+                    <div class="part2">
+                        <div *ngIf="t.start_date"><i class="far fa-calendar-check"></i><span>{{t.start_date | date: 'yyyy-MM-dd'}}</span></div>
+                        <div *ngIf="t.creator"><i class="fas fa-user"></i><span>{{t.creator?.name}}</span></div>
+                        <div *ngIf="t.children"><i class="fas fa-sitemap"></i><span>{{t.getChildrenDone()}}/{{t.children.length}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="module-footer"></div>
+</div>
+
+<app-job-dialog #jobDlg></app-job-dialog>

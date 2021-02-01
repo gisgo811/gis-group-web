@@ -1,0 +1,73 @@
+
+    <div class="article-container">
+        <div class="cover" *ngFor="let article of articles">
+            <div class="book">
+                <label for="page-1" class="book__page book__page--1">
+                    <img [src]="article.cover" alt="">
+                </label>
+
+                <label for="page-2" class="book__page book__page--4">
+                    <div class="page__content">
+                        <h1 class="page__content-title">摘要</h1>
+                        <div class="page__content-blockquote">
+                            <p class="page__content-blockquote-text">GIS是一个系统，是这么一个系统：它将我们的认知世界中的地理要素进行建模，建模概化后存储为矢量或栅格的数据结构，读取该数据并实现一系列数据处理、分析、发布的API提供给开发用户，包装数据编辑、查询、分析成一软件平台提供给应用用户，最后，通过专题制图表现为一系列的数字化地图。</p>
+                        </div>
+                        <div class="page__number">3</div>
+                    </div>
+                </label>
+
+                <!-- Resets the page -->
+                <input type="radio" name="page" id="page-1"/>
+
+                <!-- Goes to the second page -->
+                <input type="radio" name="page" id="page-2"/>
+                <label class="book__page book__page--2">
+                    <div class="book__page-front">
+                        <div class="page__content">
+                            <h1 class="page__content-book-title">{{article.title}}</h1>
+                            <h2 class="page__content-author">{{article.author}}</h2>
+
+                            <div class="page__content-copyright">
+                                <img style="height: 50px;" src="../../assets/images/badge2.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book__page-back">
+                        <div class="page__content">
+                            <h1 class="page__content-title">目录</h1>
+                            <table class="page__content-table">
+                                <tr>
+                                    <td align="left">第一讲</td>
+                                    <td align="left">GIS之定义</td>
+                                    <td align="right">3</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">第二讲</td>
+                                    <td align="left">GIS之思想</td>
+                                    <td align="right">43</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">第三讲</td>
+                                    <td align="left">GIS之应用</td>
+                                    <td align="right">87</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">第四讲</td>
+                                    <td align="left">GIS之前沿</td>
+                                    <td align="right">147</td>
+                                </tr>
+                                <tr>
+                                    <td align="left">第五讲</td>
+                                    <td align="left">GIS之编程</td>
+                                    <td align="right">173</td>
+                                </tr>
+                            </table>
+
+                            <div class="page__number">2</div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+

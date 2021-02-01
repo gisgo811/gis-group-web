@@ -1,0 +1,15 @@
+<div class="login-container">
+    <div class="form-wrapper">
+        <form #loginForm="ngForm" class="login-info" role="form" (submit)="login()">
+            <div class="login-form-logo">
+                <img style="height: 50px;" src="assets/images/badge2.svg"/>
+            </div>
+            <span class="login-form-title">欢迎</span>
+            <span class="login-form-desc">请使用Github账号加入或登录！</span>
+            <button class="btn btn-primary" (click)="login()">Github 登 录</button>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,95 @@
+.tab-heading {
+    padding : 0px 10px;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.tab-heading li  {
+    display: inline-block;
+    margin-right: 2px;
+}
+.tab-heading li a {
+    display: block;
+    border-radius: 0px;
+    min-width: 80px;
+    text-align: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    border-bottom: solid 2px transparent;
+}
+.tab-heading li.active a {
+    border-bottom: solid 2px rgb(53, 42, 255);
+}
+.tab-heading li.active a,
+.tab-heading li.active a:focus,
+.tab-heading li.active a:hover{
+    color: rgb(53, 42, 255);
+}
+.tab-heading li a:focus,
+.tab-heading li a:hover {
+    border-bottom: solid 2px rgb(53, 42, 255);
+}
+//animated underline
+.tab-heading{
+    li:hover a {
+        border-color: transparent;
+    }
+
+    li {
+        position: relative;
+        transition: 0.2s all linear;
+        cursor: pointer;
+    }
+
+    li::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: 0;
+        left: 100%;
+        width: 0;
+        border-bottom: 2px solid rgb(53, 42, 255);
+        transition: 0.2s all linear;
+    }
+
+    li:hover::before {
+        left: 0;
+        width: 100%;
+        transition-delay: 0.1s;
+        border-bottom-color: rgb(53, 42, 255);
+    }
+
+    li:hover ~ li::before {
+        left: 0;
+    }
+}
+
+.tab-content {
+    overflow-y: hidden;
+}
+
+.tab-content > .tab {
+    display: none;
+    animation-name: fadeInRight;
+    -webkit-animation-name: fadeInRight;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+}
+.tab-content > .active {
+    display: block;
+}
+
+.tab-badge {
+    margin-left: 3px;
+    padding: 3px 5px;
+    line-height: 0.9;
+    font-size: 10px;
+    vertical-align: top;
+    background-color: #ccc;
+}

@@ -1,0 +1,15 @@
+.module-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 70px 1fr 50px;
+    background: linear-gradient(-90deg, #adc0e0, #303548);
+
+    .module-body {
+        padding: 15px;
+        overflow-y: auto;
+        height: 100%;
+    }
+
+}
+

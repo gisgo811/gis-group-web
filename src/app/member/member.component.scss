@@ -1,0 +1,121 @@
+.module-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 70px 1fr 50px;
+    background: linear-gradient(45deg, #ecd7bc, #c95c3a);
+
+    .module-body {
+        padding: 15px;
+        overflow-y: auto;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-rows: auto 1fr;
+    }
+}
+
+.card-header {
+    display: grid;
+    grid-gap: 5px;
+    grid-auto-rows: min-content;
+}
+
+.card-container {
+    overflow-y: auto;
+    display: grid;
+    .card-wrapper{
+        margin: 0 auto;
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-auto-rows: min-content;
+    }
+}
+
+.wrapper {
+    width: 320px;
+    height: auto;
+    background: #FDFEFF;
+    transition: background .6s ease;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 8px 40px rgba(#000000, .2);
+
+    .profile {
+        margin-top: 2.2em;
+        position: relative;
+
+
+        .thumbnail {
+            width: 124px;
+            height: 124px;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1.5em;
+            border-radius: 100%;
+            box-shadow: 0 13px 26px rgba(#000, .2), 0 3px 6px rgba(#000, .2);
+        }
+        .name {
+            color: #2D354A;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .title {
+            color: #7C8097;
+            font-size: 16px;
+            font-weight: 300;
+            text-align: center;
+            padding-top: .5em;
+            padding-bottom: .5em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .language {
+            color: #7C8097;
+            font-size: 14px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .city {
+            color: #7C8097;
+            font-size: 14px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .code {
+            color: #fff;
+            font-size: 24px;
+            letter-spacing: 1px;
+            width: 120px;
+            text-align: center;
+            outline: none;
+            border: none;
+            display: grid;
+            align-items: center;
+            font-weight: 600;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 70px;
+            box-shadow: 0 13px 26px rgba(#000, .16), 0 3px 6px rgba(#000, .16);
+            background: linear-gradient(to bottom right, #C90A6D, #FF48A0);
+            margin-bottom: 15px;
+        }
+
+        .date {
+            color: #7C8097;
+            font-size: 14px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    }
+}

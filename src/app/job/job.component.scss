@@ -1,0 +1,75 @@
+.module-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 70px 1fr 50px;
+    background: linear-gradient(45deg, #ecd7bc, #c95c3a);
+
+    .module-body {
+        padding: 15px;
+        overflow-y: auto;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-rows: auto 1fr;
+    }
+}
+
+.card-header {
+    display: grid;
+    grid-gap: 5px;
+    grid-auto-rows: min-content;
+}
+
+.card-container {
+    overflow-y: auto;
+    display: grid;
+    background-color: rgba(255,255,255,0.5);
+    .card-wrapper{
+        margin: 0 auto;
+        display: grid;
+        padding: 15px;
+        grid-gap: 5px;
+        grid-auto-flow: row;
+        grid-auto-rows: min-content;
+    }
+}
+
+.task-card {
+    border: 1px solid rgb(225, 225, 225);
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-gap: 5px;
+    width: 1000px;
+    background-color: #fff;
+    .part1 {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        .name {
+            font-size: 15px;
+            > span {
+                padding-right: 5px;
+            }
+        }
+    }
+    .part2 {
+        color: #aaa;
+        > label {
+            margin-right: 10px;
+        }
+        > div {
+            display: inline-block;
+            margin-right: 10px;
+            i {
+                padding-right: 5px;
+            }
+        }
+    }
+}
+
+.task-card:hover {
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}

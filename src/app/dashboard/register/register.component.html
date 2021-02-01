@@ -1,0 +1,84 @@
+<div class="redirect-container">
+    <div class="form-wrapper" *ngIf="shown">
+        <form nz-form class="login-info" [formGroup]="validateForm">
+            <div class="login-form-logo">
+                <img style="height: 50px;" src="assets/images/badge2.svg"/>
+            </div>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="github" nzTooltipTitle="Github账号">Github</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入Github账号!">
+                    <input nz-input [(ngModel)]="user.github"  formControlName="github" readonly/>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired nzTooltipTitle="姓名，最多4字">
+                    <span>姓名</span>
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入姓名!">
+                    <input nz-input [(ngModel)]="user.name" formControlName="name" maxlength="4" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label style="text-align: left;" [nzSm]="24" [nzXs]="24" nzRequired nzFor="develop">你是什么师</nz-form-label>
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                    <nz-radio-group [(ngModel)]="user.develop" formControlName="develop">
+                        <label nz-radio [nzValue]="0">前端工程师</label>
+                        <label nz-radio [nzValue]="1">后端工程师</label>
+                        <label nz-radio [nzValue]="2">全栈工程师</label>
+                        <label nz-radio [nzValue]="3">界面设计师</label>
+                        <label nz-radio [nzValue]="4">数据分析师</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label style="text-align: left;" [nzSm]="24" [nzXs]="24" nzRequired nzFor="language">精通语言</nz-form-label>
+                <nz-form-control [nzSm]="24" [nzXs]="24">
+                    <nz-radio-group [(ngModel)]="user.language" formControlName="language">
+                        <label nz-radio [nzValue]="0">JavaScript</label>
+                        <label nz-radio [nzValue]="1">.Net(C#)</label>
+                        <label nz-radio [nzValue]="2">Java</label>
+                        <label nz-radio [nzValue]="3">Python</label>
+                        <label nz-radio [nzValue]="4">C++</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="city" nzRequired nzTooltipTitle="城市，最多4字">
+                    <span>城市</span>
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入城市!">
+                    <input nz-input [(ngModel)]="user.city" formControlName="city" maxlength="4" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="college" nzRequired nzTooltipTitle="学校，最多6字">
+                    <span>学校</span>
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入学校!">
+                    <input nz-input [(ngModel)]="user.college" formControlName="college" maxlength="6" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="major" nzRequired nzTooltipTitle="专业">
+                    <span>专业</span>
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="输入专业!">
+                    <input nz-input [(ngModel)]="user.major" formControlName="major" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-row>
+                <nz-form-control [nzSpan]="10" [nzOffset]="14" >
+                    <button nz-button style="margin-right: 10px;" (click)="quit()">退出</button>
+                    <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="submit()">加入</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+    <div class="loading-wrapper" *ngIf="!shown">
+        <nz-spin nzSimple nzTip="正在登录..." [nzSize]="'large'"></nz-spin>
+    </div>
+
+</div>
+
+
+

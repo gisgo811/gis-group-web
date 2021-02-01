@@ -1,0 +1,26 @@
+.ant-menu-item {
+    font-weight: bold;
+    outline: 0px!important;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-active, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-open, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item-selected, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item:hover, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-active, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-open, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu-selected, .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu:hover {
+    color: rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+
+}
+
+.ant-menu-horizontal>.ant-menu-item a {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.ant-menu-horizontal>.ant-menu-item a:hover, .ant-menu-horizontal>.ant-menu-item-selected a {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.ant-menu-item-active, .ant-menu-item-selected, .ant-menu-item-selected a, .ant-menu-item-selected a:hover, .ant-menu-item:hover, .ant-menu-item>.ant-badge a:hover, .ant-menu-submenu-active, .ant-menu-submenu-title:hover, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.ant-menu-item:active, .ant-menu-submenu-title:active {
+    background: transparent;
+}

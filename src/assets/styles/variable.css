@@ -1,0 +1,11 @@
+:root {
+
+    /* spacing */
+    /* this is what defines the global scale */
+    --baseline: 12px;
+    /* fonts */
+    --book-title: "YaHei";
+    --title: "YaHei";
+    --body: "YaHei";
+    --base-size: 14px;
+}

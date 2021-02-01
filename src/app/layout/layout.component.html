@@ -1,0 +1,72 @@
+
+<div class="header fixed">
+    <div class="logo-area">
+        <img style="height: 50px;" src="../../assets/images/badge.svg"/>
+        <!--<img style="height: 50px;" src="assets/images/logo.png"/>-->
+        <span style="font-size: 36px; font-weight: bold; margin-left: 15px; letter-spacing: 3px">集思社</span>
+    </div>
+    <div class="user-area">
+        <a nz-dropdown [nzDropdownMenu]="menu">
+            <img class="avatar-image" *ngIf="authService.user" [src]="authService.user.head" onerror="this.src='assets/images/badge2.svg'"/>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <div class="card" *ngIf="authService.user">
+                <div class="card__front card__part" [ngClass]="{'card-formal': authService.user.status == 1, 'card-temp': authService.user.status == 0}">
+                    <img class="card__front-square card__square" src="../../assets/images/badge.svg">
+                    <div class="card__front-logo card__logo">{{authService.user.status == 1 ? "正式" : "见习"}}</div>
+                    <p class="card_numer">**** **** **** {{authService.user.code}}</p>
+                    <div class="card__space-75">
+                        <span class="card__label">{{authService.user.getDevelop()}}</span>
+                        <p class="card__info">{{authService.user.name}}</p>
+                    </div>
+                    <div class="card__space-25">
+                        <span class="card__label">{{authService.user.city}}</span>
+                        <p class="card__info">{{authService.user.college}}</p>
+                    </div>
+                </div>
+                <div class="card__back card__part" [ngClass]="{'card-formal': authService.user.status == 1, 'card-temp': authService.user.status == 0}">
+                    <div class="card__black-line"></div>
+                    <div class="card__back-content">
+                        <div class="card__secret">
+                            <span class="card__secret--date">{{authService.user.date | date: "yyyy-MM-dd"}}</span>
+                            <p class="card__secret--last">{{authService.user.code}}</p>
+                        </div>
+                        <img class="card__back-square card__square" src="../../assets/images/badge.svg">
+                        <div class="card__back-actions">
+                            <button nz-button nzType="dashed" [nzSize]="'small'" (click)="userDlg.show(authService.user)">修改</button>
+                            <button nz-button nzType="dashed" [nzSize]="'small'" (click)="quit()">退出</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+    </div>
+    <div class="router-area">
+        <ul class="menu" nz-menu nzMode="horizontal">
+            <li style="letter-spacing: 1px;" nz-menu-item nzMatchRouter [routerLink]="'dashboard'">
+                加入
+            </li>
+            <li style="letter-spacing: 1px;" nz-menu-item nzMatchRouter [routerLink]="'member'" *ngIf="authService.user">
+                成员
+            </li>
+            <!--<li style="letter-spacing: 1px;" nz-menu-item nzMatchRouter [routerLink]="'activity'">
+                活动
+            </li>-->
+            <li style="letter-spacing: 1px;" nz-menu-item nzMatchRouter [routerLink]="'job'" *ngIf="authService.user">
+                任务
+            </li>
+            <!--<li nz-menu-item nzMatchRouter [routerLink]="'article'">
+                文章
+            </li>-->
+        </ul>
+    </div>
+</div>
+
+<router-outlet></router-outlet>
+
+<div class="footer fixed">
+    Copyright © 2021-2025 版权所有 ICP证：京ICP备15010239号-2
+</div>
+
+
+<app-user-dialog #userDlg (onSubmit)="edit()"></app-user-dialog>
