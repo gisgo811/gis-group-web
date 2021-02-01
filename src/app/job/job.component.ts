@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {UserService} from '../shared/services/user.service';
 import {JobService} from '../shared/services/job.service';
+import {Job} from '../shared/model/job';
+import {AuthService} from '../shared/services/auth.service';
 
 @Component({
     selector: 'app-job',
@@ -29,7 +31,7 @@ export class JobComponent implements OnInit {
 
     jobs: any = [];
 
-    constructor(private jobService: JobService) {
+    constructor(private jobService: JobService, private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -49,4 +51,14 @@ export class JobComponent implements OnInit {
         });
     }
 
+    submit(event) {
+        if (event.mode == 0) {
+            this._jobs.push(event.job);
+            this.filter();
+        } else {
+            const index = this.jobs.findIndex(item => item._id == event.job._id);
+            this._jobs.splice(index, 1, event.job);
+            this.filter();
+        }
+    }
 }

@@ -82,6 +82,9 @@ export class Job extends Entity {
     @Serialize()
     public name: string = "";
 
+    @Serialize()
+    public code: string = "";
+
     @Editor("Memo")
     @Alias("描述")
     @Serialize()

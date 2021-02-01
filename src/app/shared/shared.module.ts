@@ -16,6 +16,7 @@ import {NzBadgeModule} from 'ng-zorro-antd/badge';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import {Tabset2Component} from './components/tabset2/tabset2.component';
 import {Tab2Component} from './components/tabset2/tab2/tab2.component';
 
@@ -26,7 +27,7 @@ import {Tab2Component} from './components/tabset2/tab2/tab2.component';
         NzButtonModule,
         NzInputModule, NzDatePickerModule,
         NzRadioModule,
-        NzCheckboxModule,
+        NzCheckboxModule, NzSelectModule,
         NzFormModule,
         NzModalModule, NzMessageModule,
         NzGridModule, NzTabsModule,
@@ -44,7 +45,7 @@ import {Tab2Component} from './components/tabset2/tab2/tab2.component';
         NzButtonModule,
         NzInputModule, NzDatePickerModule,
         NzRadioModule,
-        NzCheckboxModule,
+        NzCheckboxModule, NzSelectModule,
         NzFormModule,
         NzModalModule, NzMessageModule,
         NzGridModule, NzTabsModule,

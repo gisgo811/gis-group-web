@@ -19,6 +19,17 @@ export class JobDialogComponent implements OnInit {
     @Output() onSave = new EventEmitter();
     @Output() onCancel = new EventEmitter();
 
+    categories = [
+        {label: "社团网站", value: 0, checked: true},
+        {label: "社团活动", value: 1, checked: true},
+        {label: "社团制度", value: 2, checked: true},
+        {label: "API开发", value: 3, checked: true},
+        {label: "API网站", value: 4, checked: true},
+        {label: "Server开发", value: 5, checked: true},
+        {label: "Manager网站", value: 6, checked: true},
+        {label: "Tool开发", value: 7, checked: true}
+    ];
+
     job: any;
     users: any;
     source: any;            // input
@@ -69,10 +80,6 @@ export class JobDialogComponent implements OnInit {
             this.job.getRoles(this.authService.user);
             this.mode = 1;
             this.shown = true;
-            this.onSave.emit({
-                job: this.job,
-                mode: this.mode
-            });
         }else{
             this.message.create('warning', "该任务已被删除，请刷新！");
         }
@@ -126,6 +133,7 @@ export class JobDialogComponent implements OnInit {
         if(this.mode === 0){
             this.jobService.create(this.job).subscribe( res => {
                 if(res.result){
+                    this.job.code = res.job.code;
                     this.onSave.emit({
                         job: this.job,
                         mode: this.mode

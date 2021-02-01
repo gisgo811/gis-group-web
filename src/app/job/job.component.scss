@@ -15,9 +15,15 @@
 }
 
 .card-header {
+    position: relative;
     display: grid;
     grid-gap: 5px;
     grid-auto-rows: min-content;
+    .task-action {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 }
 
 .card-container {
@@ -44,12 +50,21 @@
     width: 1000px;
     background-color: #fff;
     .part1 {
+        color: #aaa;
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr auto auto;
         align-items: center;
         .name {
+            color: #000;
             font-size: 15px;
             > span {
+                padding-right: 5px;
+            }
+        }
+        > div {
+            display: inline-block;
+            margin-right: 10px;
+            i {
                 padding-right: 5px;
             }
         }

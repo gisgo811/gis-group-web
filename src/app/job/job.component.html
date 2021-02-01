@@ -10,6 +10,9 @@
                 <span style="margin-right: 10px">状态: </span>
                 <nz-checkbox-group [(ngModel)]="status" (ngModelChange)="filter()"></nz-checkbox-group>
             </div>
+            <div class="task-action">
+                <button type="button" class="btn btn-primary" (click)="jobDlg.create()">发布</button>
+            </div>
         </div>
         <div class="card-container">
             <div class="card-wrapper">
@@ -19,6 +22,8 @@
                             <nz-tag [nzColor]="t.status === 1 ? '#87d068' : '#f50' ">{{t.getStatus()}}</nz-tag>
                             <span>{{t.name}}</span>
                         </div>
+                        <div *ngIf="t.editors"><i class="fas fa-user-edit"></i><span>{{t.editors.length}}</span></div>
+                        <div *ngIf="t.followers"><i class="fas fa-user-cog"></i><span>{{t.followers.length}}</span></div>
                     </div>
                     <div class="part2">
                         <div *ngIf="t.start_date"><i class="far fa-calendar-check"></i><span>{{t.start_date | date: 'yyyy-MM-dd'}}</span></div>
@@ -32,4 +37,4 @@
     <div class="module-footer"></div>
 </div>
 
-<app-job-dialog #jobDlg></app-job-dialog>
+<app-job-dialog #jobDlg (onSave)="submit($event)"></app-job-dialog>

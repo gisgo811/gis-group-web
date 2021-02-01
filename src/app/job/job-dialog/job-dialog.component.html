@@ -10,13 +10,19 @@
                     <div class="grid-column-2">
                         <div class="form-item">
                             <div class="form-label">任务名称</div>
-                            <input class="form-component" type="text" name="name" [(ngModel)]="job.name" required>
+                            <input nz-input class="form-component" type="text" name="name" [(ngModel)]="job.name" required>
+                        </div>
+                        <div class="form-item">
+                            <div class="form-label">任务分类</div>
+                            <nz-select class="form-component" type="text" name="district" [(ngModel)]="job.category" required>
+                                <nz-option *ngFor="let item of categories" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+                            </nz-select>
                         </div>
                     </div>
 
                     <div class="form-item">
                         <div class="form-label">描述</div>
-                        <textarea class="form-component" rows="3" [(ngModel)]="job.description" name="description"></textarea>
+                        <textarea nz-input class="form-component" rows="3" [(ngModel)]="job.description" name="description"></textarea>
                     </div>
 
                     <div class="form-item" style="align-items: inherit">
@@ -73,12 +79,22 @@
                                             <input nz-input class="form-component" type="text" name="name" [(ngModel)]="job.name" [readonly]="!job.hasRole(['CREATOR'])" required>
                                         </div>
                                         <div class="form-item">
+                                            <div class="form-label">任务编码</div>
+                                            <input nz-input class="form-component" type="text" name="code" [ngModel]="job.code" readonly>
+                                        </div>
+                                        <div class="form-item">
+                                            <div class="form-label">任务分类</div>
+                                            <nz-select class="form-component" type="text" name="district" [(ngModel)]="job.category" required>
+                                                <nz-option *ngFor="let item of categories" [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+                                            </nz-select>
+                                        </div>
+                                        <div class="form-item">
                                             <div class="form-label">创建人</div>
                                             <input nz-input class="form-component" type="text" name="creator" [ngModel]="job.creator?.name" readonly>
                                         </div>
                                         <div class="form-item">
                                             <div class="form-label">开始时间</div>
-                                            <nz-date-picker class="form-component" [nzFormat]="'yyyy/MM/dd'" name="start_date" [ngModel]="job.start_date" readonly></nz-date-picker>
+                                            <nz-date-picker class="form-component" [nzFormat]="'yyyy/MM/dd'" name="start_date" [(ngModel)]="job.start_date" required></nz-date-picker>
                                         </div>
                                         <div class="form-item">
                                             <div class="form-label">完成时间</div>
