@@ -23,6 +23,7 @@ export class MemberComponent implements OnInit {
         {label: "C++", value: 4, checked: true}
     ];
     cities = [
+        {label: "全部", value: "全部", checked: true},
         {label: "北京", value: "北京", checked: true},
         {label: "上海", value: "上海", checked: true},
         {label: "广州", value: "广州", checked: true},
@@ -30,7 +31,9 @@ export class MemberComponent implements OnInit {
         {label: "武汉", value: "武汉", checked: true},
         {label: "杭州", value: "杭州", checked: true},
         {label: "南京", value: "南京", checked: true},
-        {label: "成都", value: "成都", checked: true}
+        {label: "成都", value: "成都", checked: true},
+        {label: "苏州", value: "苏州", checked: true},
+        {label: "西安", value: "西安", checked: true}
     ];
 
     _members: any = [];
@@ -54,7 +57,7 @@ export class MemberComponent implements OnInit {
             const language = this.languages.find(item => item.checked && member.language == item.value);
             if (!language) return false;
             const city = this.cities.find(item => item.checked && member.city == item.value);
-            if (!city) return false;
+            if (!city && !this.cities[0].checked) return false;
             return true;
         });
     }

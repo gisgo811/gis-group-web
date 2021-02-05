@@ -37,4 +37,4 @@
     <div class="module-footer"></div>
 </div>
 
-<app-job-dialog #jobDlg (onSave)="submit($event)"></app-job-dialog>
+<app-job-dialog #jobDlg (onSave)="save($event)" (onDelete)="delete($event)"></app-job-dialog>

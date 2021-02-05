@@ -3,7 +3,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {ConfigService} from "../../shared/services/config.service";
 import {AuthService} from "../../shared/services/auth.service";
 import {JobService} from "../../shared/services/job.service";
-import {Job, JobChild, JobComment} from '../../shared/model/job';
+import {Job, JobChild, JobComment, JobStatus} from '../../shared/model/job';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 
@@ -17,6 +17,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 export class JobDialogComponent implements OnInit {
 
     @Output() onSave = new EventEmitter();
+    @Output() onDelete = new EventEmitter();
     @Output() onCancel = new EventEmitter();
 
     categories = [
@@ -83,6 +84,48 @@ export class JobDialogComponent implements OnInit {
         }else{
             this.message.create('warning', "该任务已被删除，请刷新！");
         }
+    }
+
+    archive() {
+        this.modal.confirm({
+            nzTitle: '提醒',
+            nzContent: '是否归档任务！',
+            nzOkText: '确认',
+            nzCancelText: '取消',
+            nzOnOk: () => {
+                this.job.close = true;
+                this.job.status = JobStatus.Close;
+                this.jobService.update(this.job).subscribe( res => {
+                    if(res.result){
+                        this.onSave.emit({
+                            job: this.job,
+                            mode: this.mode
+                        });
+                        this.shown = false;
+                        this.message.create('success', '任务归档成功！');
+                    }else{
+                        this.message.create('warning', '任务归档失败！');
+                    }
+                });
+            }
+        });
+    }
+
+    delete() {
+        this.modal.confirm({
+            nzTitle: '提醒',
+            nzContent: '是否删除任务！',
+            nzOkText: '确认',
+            nzCancelText: '取消',
+            nzOnOk: () => {
+                this.jobService.delete(this.job._id).subscribe(res => {
+                    this.onDelete.emit({
+                        job: this.job
+                    });
+                    this.shown = false;
+                });
+            }
+        });
     }
 
     createSubJob() {

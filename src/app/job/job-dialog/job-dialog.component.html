@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="form-item">
                                         <div class="form-label">描述</div>
-                                        <textarea nz-input class="form-component" rows="3" [(ngModel)]="job.description" name="description" [readonly]="!job.hasRole(['CREATOR','EDITOR'])"></textarea>
+                                        <textarea nz-input class="form-component" rows="3" [(ngModel)]="job.description" name="description" [readonly]="!job.hasRole(['CREATOR','EDITOR']) || job.close"></textarea>
                                     </div>
                                     <div class="form-item" style="align-items: inherit">
                                         <div class="form-label" style="margin-top: 15px;">子任务</div>
@@ -112,22 +112,22 @@
                                                 <div class="list-item sub-job-list-columns" *ngFor="let j of job.children;let i = index;">
                                                     <div>{{i+1}}</div>
                                                     <div>
-                                                        <label *ngIf="job.hasRole(['CREATOR','EDITOR'])" nz-checkbox [name]="'check_sub_job_' + i" [(ngModel)]="j.done" (ngModelChange)="checkSubJobDone(j)"></label>
-                                                        <i class="fas" *ngIf="!job.hasRole(['CREATOR','EDITOR'])" [ngClass]="{'fa-check text-success':j.done,'fa-times text-danger':!j.done}"></i>
+                                                        <label *ngIf="job.hasRole(['CREATOR','EDITOR']) && !job.close" nz-checkbox [name]="'check_sub_job_' + i" [(ngModel)]="j.done" (ngModelChange)="checkSubJobDone(j)"></label>
+                                                        <i class="fas" *ngIf="!job.hasRole(['CREATOR','EDITOR']) || job.close" [ngClass]="{'fa-check text-success':j.done,'fa-times text-danger':!j.done}"></i>
                                                     </div>
                                                     <div>
                                                         <span *ngIf="!j.edit">{{j.name}}</span>
                                                         <input *ngIf="j.edit" type="text" [name]="'edit_sub_job_' + i" [(ngModel)]="j.name" (keydown.enter)="saveSubJob(j)">
                                                     </div>
                                                     <div class="action">
-                                                        <div *ngIf="!j.edit && job.hasRole(['CREATOR','EDITOR'])" (click)="editSubJob(j)"><i class="far fa-edit"></i></div>
-                                                        <div *ngIf="!j.edit && job.hasRole(['CREATOR','EDITOR'])" (click)="removeSubJob(i, j)"><i class="far fa-trash-alt"></i></div>
-                                                        <div *ngIf="j.edit && job.hasRole(['CREATOR','EDITOR'])" (click)="saveSubJob(j)"><i class="far fa-save"></i></div>
+                                                        <div *ngIf="!j.edit && job.hasRole(['CREATOR','EDITOR']) && !job.close" (click)="editSubJob(j)"><i class="far fa-edit"></i></div>
+                                                        <div *ngIf="!j.edit && job.hasRole(['CREATOR','EDITOR']) && !job.close" (click)="removeSubJob(i, j)"><i class="far fa-trash-alt"></i></div>
+                                                        <div *ngIf="j.edit && job.hasRole(['CREATOR','EDITOR']) && !job.close" (click)="saveSubJob(j)"><i class="far fa-save"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="custom-list" *ngIf="!child">
-                                                <div class="list-item sub-job-list-add" [class.disabled]="!job.hasRole(['CREATOR','EDITOR'])">
+                                                <div class="list-item sub-job-list-add" [class.disabled]="!job.hasRole(['CREATOR','EDITOR']) || job.close">
                                                     <div><i (click)="createSubJob()" class="far fa-plus-square"></i></div>
                                                     <div><span (click)="createSubJob()">添加子任务</span></div>
                                                 </div>
@@ -154,8 +154,8 @@
                                                 <label class="label label-success-o" *ngFor="let editor of job.editors"><i class="far fa-user"></i>{{editor.name}}</label>
                                             </div>
                                             <div class="add-editor">
-                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="!job.hasRole(['CREATOR','EDITOR'])" (click)="addEditor()">参与</button>
-                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="job.hasRole(['EDITOR'])" (click)="removeEditor()">取消</button>
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="!job.hasRole(['CREATOR','EDITOR']) && !job.close" (click)="addEditor()">参与</button>
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="job.hasRole(['EDITOR']) && !job.close" (click)="removeEditor()">取消</button>
                                             </div>
                                         </div>
                                     </div>
@@ -167,8 +167,8 @@
                                                 <label class="label label-success-o" *ngFor="let follower of job.followers"><i class="far fa-user"></i>{{follower.name}}</label>
                                             </div>
                                             <div class="add-editor">
-                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="!job.hasRole(['CREATOR','FOLLOWER'])" (click)="addFollower()">关注</button>
-                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="job.hasRole(['FOLLOWER'])" (click)="removeFollower()">取消</button>
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="!job.hasRole(['CREATOR','FOLLOWER']) && !job.close" (click)="addFollower()">关注</button>
+                                                <button type="button" class="btn btn-primary btn-sm" *ngIf="job.hasRole(['FOLLOWER']) && !job.close" (click)="removeFollower()">取消</button>
                                             </div>
                                         </div>
                                     </div>
@@ -213,9 +213,17 @@
         </ng-template>
 
         <ng-template #modalFooter>
-            <button type="button" class="btn btn-default" (click)="hide()">取消</button>
-            <button type="button" class="btn btn-success" (click)="save()" *ngIf="job?.hasRole(['CREATOR','EDITOR'])"
-                    [disabled]="!addJobForm.form.valid">保存</button>
+            <div class="modal-footer">
+                <div class="modal-footer-left">
+                    <button type="button" class="btn btn-danger" (click)="delete()" *ngIf="mode != 0 && job?.hasRole(['CREATOR'])">删除</button>
+                    <button type="button" class="btn btn-primary" (click)="archive()" *ngIf="mode != 0 && job?.hasRole(['CREATOR']) && !job.close">归档</button>
+                </div>
+                <div class="modal-footer-right">
+                    <button type="button" class="btn btn-default" (click)="hide()">取消</button>
+                    <button type="button" class="btn btn-success" (click)="save()" *ngIf="job?.hasRole(['CREATOR','EDITOR']) && !job.close"
+                            [disabled]="!addJobForm.form.valid">保存</button>
+                </div>
+            </div>
         </ng-template>
     </form>
 </nz-modal>

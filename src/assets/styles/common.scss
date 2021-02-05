@@ -3,6 +3,10 @@ body {
     font-family: "Microsoft Yahei";
 }
 
+button:focus {
+    outline: none;
+}
+
 /*浏览器滚动条样式*/
 ::-webkit-scrollbar {
     width: 4px;

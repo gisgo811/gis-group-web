@@ -24,3 +24,7 @@
 .ant-menu-item:active, .ant-menu-submenu-title:active {
     background: transparent;
 }
+
+.ant-modal-close-x:focus {
+    outline: none;
+}

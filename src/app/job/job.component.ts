@@ -51,7 +51,7 @@ export class JobComponent implements OnInit {
         });
     }
 
-    submit(event) {
+    save(event) {
         if (event.mode == 0) {
             this._jobs.push(event.job);
             this.filter();
@@ -60,5 +60,11 @@ export class JobComponent implements OnInit {
             this._jobs.splice(index, 1, event.job);
             this.filter();
         }
+    }
+
+    delete(event) {
+        const index = this.jobs.findIndex(item => item._id == event.job._id);
+        this._jobs.splice(index, 1);
+        this.filter();
     }
 }
