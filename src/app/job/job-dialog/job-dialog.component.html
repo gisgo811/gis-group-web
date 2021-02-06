@@ -22,13 +22,13 @@
 
                     <div class="form-item">
                         <div class="form-label">描述</div>
-                        <textarea nz-input class="form-component" rows="3" [(ngModel)]="job.description" name="description"></textarea>
+                        <textarea nz-input class="form-component" rows="2" [(ngModel)]="job.description" name="description"></textarea>
                     </div>
 
                     <div class="form-item" style="align-items: inherit">
                         <div class="form-label" style="margin-top: 15px;">子任务</div>
                         <div class="form-component jobs">
-                            <div class="custom-list" *ngIf="job.children?.length >0">
+                            <div class="custom-list" style="max-height: 200px; overflow-y: auto;" *ngIf="job.children?.length >0">
                                 <div class="list-item sub-job-list-columns" *ngFor="let j of job.children;let i = index;">
                                     <div>{{i+1}}</div>
                                     <div>
@@ -103,12 +103,12 @@
                                     </div>
                                     <div class="form-item">
                                         <div class="form-label">描述</div>
-                                        <textarea nz-input class="form-component" rows="3" [(ngModel)]="job.description" name="description" [readonly]="!job.hasRole(['CREATOR','EDITOR']) || job.close"></textarea>
+                                        <textarea nz-input class="form-component" rows="2" [(ngModel)]="job.description" name="description" [readonly]="!job.hasRole(['CREATOR','EDITOR']) || job.close"></textarea>
                                     </div>
                                     <div class="form-item" style="align-items: inherit">
                                         <div class="form-label" style="margin-top: 15px;">子任务</div>
                                         <div class="form-component jobs">
-                                            <div class="custom-list" *ngIf="job.children?.length >0">
+                                            <div class="custom-list" style="max-height: 200px; overflow-y: auto;" *ngIf="job.children?.length >0">
                                                 <div class="list-item sub-job-list-columns" *ngFor="let j of job.children;let i = index;">
                                                     <div>{{i+1}}</div>
                                                     <div>

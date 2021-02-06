@@ -1,7 +1,7 @@
 
 <div class="header fixed">
     <div class="logo-area">
-        <img style="height: 50px;" src="../../assets/images/badge.svg"/>
+        <img style="height: 50px;" src="assets/images/badge.svg"/>
         <!--<img style="height: 50px;" src="assets/images/logo.png"/>-->
         <span style="font-size: 36px; font-weight: bold; margin-left: 15px; letter-spacing: 3px">集思社</span>
     </div>
@@ -12,7 +12,7 @@
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <div class="card" *ngIf="authService.user">
                 <div class="card__front card__part" [ngClass]="{'card-formal': authService.user.status == 1, 'card-temp': authService.user.status == 0}">
-                    <img class="card__front-square card__square" src="../../assets/images/badge.svg">
+                    <img class="card__front-square card__square" src="assets/images/badge.svg">
                     <div class="card__front-logo card__logo">{{authService.user.status == 1 ? "正式" : "见习"}}</div>
                     <p class="card_numer">**** **** **** {{authService.user.code}}</p>
                     <div class="card__space-75">
@@ -31,7 +31,7 @@
                             <span class="card__secret--date">{{authService.user.date | date: "yyyy-MM-dd"}}</span>
                             <p class="card__secret--last">{{authService.user.code}}</p>
                         </div>
-                        <img class="card__back-square card__square" src="../../assets/images/badge.svg">
+                        <img class="card__back-square card__square" src="assets/images/badge.svg">
                         <div class="card__back-actions">
                             <button nz-button nzType="dashed" [nzSize]="'small'" (click)="userDlg.show(authService.user)">修改</button>
                             <button nz-button nzType="dashed" [nzSize]="'small'" (click)="quit()">退出</button>

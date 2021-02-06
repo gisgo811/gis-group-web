@@ -121,6 +121,8 @@
 
 .comment-list {
     margin-top: 15px;
+    max-height: 400px;
+    overflow-y: auto;
 
     .comment-title {
         color: rgb(0, 0, 0);
